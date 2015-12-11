@@ -1,0 +1,53 @@
+- hosts: storagenodes
+  name: Gluster Software Install
+  sudo: true
+  tasks:
+    - name: update hosts file
+      template: src=./templates/hosts.j2 dest=/etc/hosts
+
+    - name: install software-properties-common
+      apt: pkg=software-properties-common
+
+    - name: add gluster repo
+      apt_repository: repo="ppa:gluster/glusterfs-3.7"
+
+    - name: update cache
+      apt: update_cache=yes
+
+    - name: install gluster
+      apt: pkg=glusterfs-server state=latest
+
+    - name: Ensure the GlusterFS service is running
+      service: name=glusterfs-server state=started
+    
+
+- hosts: storagenodes
+  name: Gluster Configuration
+  sudo: true
+  vars:
+    - gluster_brick_dirs: /mnt/gluster/brick1
+    - gluster_volume: glusterVolume0
+    - gluster_replicas: 2
+    - gluster_mount_dir: /data
+
+  tasks:
+    - name: Create directory
+      file: path={{gluster_brick_dirs}} state=directory
+
+    - name: Create directory
+      file: path={{gluster_mount_dir}} state=directory
+
+    - name: Create Gluster volume
+      gluster_volume: brick={{ gluster_brick_dirs }} force=true
+                      cluster={{groups.storagenodes | join(",")}}
+                      replicas={{gluster_replicas}} name={{gluster_volume}} state=present
+      run_once: true
+
+    - name: Start Gluster volume
+      gluster_volume: name={{gluster_volume}} state=started
+
+      run_once: true
+
+    - name: Ensure the Gluster volume is mounted.
+      mount: name="{{ gluster_mount_dir }}" src="{{ groups.storagenodes[0] }}:/{{ gluster_volume }}" fstype=glusterfs opts="defaults,_netdev" state=mounted
+
