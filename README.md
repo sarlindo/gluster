@@ -31,7 +31,7 @@ change into the directory
 bring it up
 
 ```
-   setup.sh
+   ./setup.sh
 
    Note: I needed to separate vm virtual box creation from provisioning because vagrant can't provision only after ALL machines are brought up.
 ```
