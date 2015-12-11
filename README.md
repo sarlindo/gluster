@@ -39,12 +39,15 @@ bring it up
 ## Usage and Test
 
 
-```
 
 #### Step 1: Log into node1 and node2 in 2 separate terminals
 
+```
+
 vagrant ssh node1
 vagrant ssh node2
+
+```
 
 #### Step 2: On node1 create any file in the directory /data
 
