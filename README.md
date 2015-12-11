@@ -57,5 +57,5 @@ sudo touch abc.txt
 
 ```
 
-#### Step 3: Now navigate to node2 and into the /data directory, you should also see the abc.txt file on node2 as well. MAGIC!
+#### Step 3: Navigate to node2 and into the /data directory, you should see the abc.txt file on node2 as well. MAGIC!
 
