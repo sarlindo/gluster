@@ -41,16 +41,16 @@ bring it up
 
 ```
 
-Step 1: Log into node1 and node2 in 2 separate terminals
+#### Step 1: Log into node1 and node2 in 2 separate terminals
 
 vagrant ssh node1
 vagrant ssh node2
 
-Step 2: On node1 create any file in the directory /data
+#### Step 2: On node1 create any file in the directory /data
 
 cd /data
 sudo touch abc.txt
 
-Step 3: Now navigate to node2 and into the /data directory, you should also see the abc.txt file on node2 as well. MAGIC!
+#### Step 3: Now navigate to node2 and into the /data directory, you should also see the abc.txt file on node2 as well. MAGIC!
 
 ```
